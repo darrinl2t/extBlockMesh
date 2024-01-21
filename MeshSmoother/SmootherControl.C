@@ -35,7 +35,6 @@ Foam::SmootherControl::SmootherControl
     // Get smoother parameters
     const dictionary& ctrls = smootherDict.subDict(subDictName);
 
-    #if (OPENFOAM >= 1812)
     ctrls.readEntry("maxIterations", _maxIterations);
     ctrls.readEntry("transformParameter", _transformParam);
     ctrls.readEntry("meanImprovTol", _meanImprovTol);
@@ -44,16 +43,6 @@ Foam::SmootherControl::SmootherControl
     ctrls.readEntry("minRelaxationTable", _minRelaxTable);
     ctrls.readEntry("snapRelaxationTable", _snapRelaxTable);
     ctrls.readEntry("ratioWorstQualityForMin", _ratioForMin);
-    #else
-    ctrls.lookup("maxIterations") >> _maxIterations;
-    ctrls.lookup("transformParameter") >> _transformParam;
-    ctrls.lookup("meanImprovTol") >> _meanImprovTol;
-    ctrls.lookup("maxMinCycleNoChange") >> _maxMinCycleNoChange;
-    ctrls.lookup("meanRelaxationTable") >> _meanRelaxTable;
-    ctrls.lookup("minRelaxationTable") >> _minRelaxTable;
-    ctrls.lookup("snapRelaxationTable") >> _snapRelaxTable;
-    ctrls.lookup("ratioWorstQualityForMin") >> _ratioForMin;
-    #endif
 
     if (_meanRelaxTable.last() > VSMALL)
     {

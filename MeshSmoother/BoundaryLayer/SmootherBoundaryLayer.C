@@ -38,17 +38,10 @@ Foam::SmootherBoundaryLayer::SmootherBoundaryLayer(const dictionary& dict)
 :
     SmootherBoundaryLayer()
 {
-    #if (OPENFOAM >= 1812)
     dict.readEntry("nSurfaceLayers", _nbLayers);
     dict.readEntry("expansionRatio", _expansionRatio);
     dict.readEntry("finalLayerThickness", _finalLayerThickness);
     dict.readEntry("relativeSizes", _relativeSize);
-    #else
-    dict.lookup("nSurfaceLayers") >> _nbLayers;
-    dict.lookup("expansionRatio") >> _expansionRatio;
-    dict.lookup("finalLayerThickness") >> _finalLayerThickness;
-    dict.lookup("relativeSizes") >> _relativeSize;
-    #endif
 
     Info<< "        - Number of BL       : " << _nbLayers << nl
         << "        - Expansion ratio    : " << _expansionRatio << nl

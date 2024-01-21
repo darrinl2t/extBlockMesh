@@ -39,17 +39,10 @@ License
 
 void Foam::SmootherBoundary::analyseDict(const dictionary& snapDict)
 {
-    #if (OPENFOAM >= 1812)
     snapDict.readEntry("featureAngle", _featureAngle);
     snapDict.readEntry("minEdgeForFeature", _minEdgeForFeature);
     snapDict.readEntry("minFeatureEdgeLength", _minFeatureEdgeLength);
     snapDict.readEntry("writeFeatures", _writeFeatures);
-    #else
-    snapDict.lookup("featureAngle") >> _featureAngle;
-    snapDict.lookup("minEdgeForFeature") >> _minEdgeForFeature;
-    snapDict.lookup("minFeatureEdgeLength") >> _minFeatureEdgeLength;
-    snapDict.lookup("writeFeatures") >> _writeFeatures;
-    #endif
 
     Info<< "  snapControls:"  << nl
         << "    - Feature angle              : " << _featureAngle  << nl
@@ -170,7 +163,7 @@ Foam::labelList Foam::SmootherBoundary::analyseFeatures
 
         geometricSurfacePatchList patchName;
         const polyPatch &patch = _polyMesh->boundaryMesh()[patchI];
-        patchName.append(geometricSurfacePatch(word(""), patch.name(), patchI));
+        patchName.append(geometricSurfacePatch(patch.name(), patchI, word("")));
 
         // Renumber points
         pointField surfacePoints(p2s.size());

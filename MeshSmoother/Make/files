@@ -1,5 +1,3 @@
-$(BACKPORT_SOURCES)
-
 MeshSmoother.C
 SmootherBoundary.C
 SmootherControl.C
@@ -12,4 +10,4 @@ Point/Features/SmootherFeature.C
 Point/Features/SmootherSurface.C
 BoundaryLayer/SmootherBoundaryLayer.C
 
-LIB = $(FOAM_MODULE_LIBBIN)/libMeshSmoother
+LIB = $(FOAM_SITE_LIBBIN)/libMeshSmoother

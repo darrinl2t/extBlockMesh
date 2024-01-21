@@ -119,6 +119,7 @@
                     mergePatchPairs[pairI].first(),
                     mergePatchPairs[pairI].second(),
                     slidingInterface::INTEGRAL, // always integral
+                    false,
                     intersection::VISIBLE
                 )
             );

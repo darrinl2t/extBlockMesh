@@ -117,7 +117,7 @@ int main(int argc, char *argv[])
     word regionPath;
 
     // Check if the region is specified otherwise mesh the default region
-    if (args.optionReadIfPresent("region", regionName))
+    if (args.readIfPresent("region", regionName))
     {
         Info<< nl << "Generating mesh for region " << regionName << endl;
         regionPath = regionName;
@@ -132,7 +132,6 @@ int main(int argc, char *argv[])
     // Set the precision of the points data to 10
     IOstream::defaultPrecision(max(10u, IOstream::defaultPrecision()));
 
-    #if (OPENFOAM > 2006)
     const word meshInstance = runTime.constant();
 
     // Ensure we get information messages, even if turned off in dictionary
@@ -142,30 +141,10 @@ int main(int argc, char *argv[])
         blocks.mesh(IOobject(regionName, meshInstance, runTime));
 
     polyMesh& mesh = *meshPtr;
-    #else
-    Info<< nl << "Creating polyMesh from blockMesh" << endl;
-
-    polyMesh mesh
-    (
-        IOobject(regionName, runTime.constant(), runTime),
-        #if (OPENFOAM >= 1806)
-        pointField(blocks.points()),
-        #else
-        xferCopy<pointField>(blocks.points()),
-        #endif
-        blocks.cells(),
-        blocks.patches(),
-        blocks.patchNames(),
-        blocks.patchDicts(),
-        "defaultFaces",             // defaultFacesName,
-        emptyPolyPatch::typeName    // defaultFacesType
-    );
-    #endif
-
 
     // Smoothing
-    const bool withQuality = args.optionFound("write-quality");
-    const bool writeSteps = args.optionFound("writeSteps");
+    const bool withQuality = args.found("write-quality");
+    const bool writeSteps = args.found("writeSteps");
 
     label nWritten = 0;
     {
